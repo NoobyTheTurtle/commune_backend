@@ -13,7 +13,11 @@ func Init(url string) (*gorm.DB, error) {
 		return nil, err
 	}
 
-	if err = db.AutoMigrate(models.BankBranch{}); err != nil {
+	if err = db.AutoMigrate(models.Office{}, models.Atm{}, models.Ticket{}); err != nil {
+		return nil, err
+	}
+
+	if err = initSeeds(db); err != nil {
 		return nil, err
 	}
 

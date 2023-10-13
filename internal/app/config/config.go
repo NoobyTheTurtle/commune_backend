@@ -10,6 +10,7 @@ type Config struct {
 	DBName     string `mapstructure:"DB_NAME"`
 	DBPassword string `mapstructure:"POSTGRES_PASSWORD"`
 	GinMode    string `mapstructure:"GIN_MODE"`
+	MapApiKey  string `mapstructure:"MAP_API_KEY"`
 }
 
 func Load() (*Config, error) {
