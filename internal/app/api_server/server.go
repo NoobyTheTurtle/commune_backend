@@ -8,18 +8,18 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func Start(config *config.Config) error {
-	gin.SetMode(config.GinMode)
+func Start(c *config.Config) error {
+	gin.SetMode(c.GinMode)
 	r := gin.Default()
-	dbUrl := fmt.Sprintf("postgres://postgres:%s@postgres:%s/%s?sslmode=disable", config.DBPassword, config.DBPort, config.DBName)
+	dbUrl := fmt.Sprintf("postgres://postgres:%s@postgres:%s/%s?sslmode=disable", c.DBPassword, c.DBPort, c.DBName)
 	database, err := db.Init(dbUrl)
 	if err != nil {
 		return err
 	}
 
-	handlers.RegisterRoutes(r, database)
+	handlers.RegisterRoutes(r, database, c)
 
-	if err := r.Run(fmt.Sprintf(":%s", config.ServerPort)); err != nil {
+	if err := r.Run(fmt.Sprintf(":%s", c.ServerPort)); err != nil {
 		return err
 	}
 
