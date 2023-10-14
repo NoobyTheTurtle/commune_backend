@@ -4,8 +4,6 @@ import (
 	"commune_backend/internal/app/models"
 	"commune_backend/internal/app/utils"
 	"gorm.io/gorm"
-	"math/rand"
-	"time"
 )
 
 func initSeeds(db *gorm.DB) error {
@@ -62,36 +60,4 @@ func initAtms(db *gorm.DB, filepath string, atms *[]*models.Atm) error {
 	db.Create(atms)
 
 	return nil
-}
-
-func mockOffices(offices []*models.Office) {
-	rand.Seed(time.Now().UnixNano())
-	for i := range offices {
-		if rand.Float64() < 0.8 {
-			offices[i].Withdrawal = true
-		} else {
-			offices[i].Withdrawal = false
-		}
-		if rand.Float64() < 0.8 {
-			offices[i].Replenishment = true
-		} else {
-			offices[i].Replenishment = false
-		}
-	}
-}
-
-func mockAtms(atms []*models.Atm) {
-	rand.Seed(time.Now().UnixNano())
-	for i := range atms {
-		if rand.Float64() < 0.8 {
-			atms[i].Withdrawal = true
-		} else {
-			atms[i].Withdrawal = false
-		}
-		if rand.Float64() < 0.8 {
-			atms[i].Replenishment = true
-		} else {
-			atms[i].Replenishment = false
-		}
-	}
 }

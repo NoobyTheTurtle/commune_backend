@@ -219,6 +219,22 @@ const docTemplate = `{
                         "description": "Filter by replenishment",
                         "name": "isReplenishment",
                         "in": "query"
+                    },
+                    {
+                        "enum": [
+                            "кредит",
+                            "карта",
+                            "ипотека",
+                            "автокредит",
+                            "вклад и счет",
+                            "платежи и переводы",
+                            "страхование",
+                            "другие услуги"
+                        ],
+                        "type": "string",
+                        "description": "Filter by services",
+                        "name": "service",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -511,6 +527,12 @@ const docTemplate = `{
                 "salePointName": {
                     "type": "string"
                 },
+                "services": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
                 "status": {
                     "type": "string"
                 },
@@ -670,6 +692,12 @@ const docTemplate = `{
                 },
                 "salePointName": {
                     "type": "string"
+                },
+                "services": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 },
                 "status": {
                     "type": "string"
