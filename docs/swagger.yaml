@@ -106,8 +106,12 @@ definitions:
         type: string
       id:
         type: integer
-      office:
-        $ref: '#/definitions/models.Office'
+      number:
+        type: string
+      officeId:
+        type: integer
+      service:
+        type: string
       userId:
         type: integer
     type: object
@@ -419,6 +423,20 @@ paths:
         name: officeId
         required: true
         type: integer
+      - description: Filter by services
+        enum:
+        - кредит
+        - карта
+        - ипотека
+        - автокредит
+        - вклад и счет
+        - платежи и переводы
+        - страхование
+        - другие услуги
+        in: query
+        name: service
+        required: true
+        type: string
       produces:
       - application/json
       responses:
