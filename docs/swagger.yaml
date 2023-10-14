@@ -1,0 +1,295 @@
+definitions:
+  models.Hours:
+    properties:
+      days:
+        type: string
+      hours:
+        type: string
+    type: object
+  models.Service:
+    properties:
+      serviceActivity:
+        type: string
+      serviceCapability:
+        type: string
+    type: object
+  models.Services:
+    properties:
+      blind:
+        $ref: '#/definitions/models.Service'
+      nfcForBankCards:
+        $ref: '#/definitions/models.Service'
+      qrRead:
+        $ref: '#/definitions/models.Service'
+      supportsChargeRub:
+        $ref: '#/definitions/models.Service'
+      supportsEur:
+        $ref: '#/definitions/models.Service'
+      supportsRub:
+        $ref: '#/definitions/models.Service'
+      supportsUsd:
+        $ref: '#/definitions/models.Service'
+      wheelchair:
+        $ref: '#/definitions/models.Service'
+    type: object
+  models.Ticket:
+    properties:
+      id:
+        type: integer
+      officeId:
+        type: integer
+      userId:
+        type: integer
+    type: object
+  support_models.AtmWithRadius:
+    properties:
+      address:
+        type: string
+      allDay:
+        type: boolean
+      id:
+        type: integer
+      latitude:
+        type: number
+      longitude:
+        type: number
+      radius_distance:
+        type: number
+      services:
+        $ref: '#/definitions/models.Services'
+    type: object
+  support_models.OfficeWithRadius:
+    properties:
+      address:
+        type: string
+      distance:
+        type: integer
+      hasRamp:
+        type: string
+      id:
+        type: integer
+      kep:
+        type: boolean
+      latitude:
+        type: number
+      longitude:
+        type: number
+      metroStation:
+        type: string
+      myBranch:
+        type: boolean
+      officeType:
+        type: string
+      openHours:
+        items:
+          $ref: '#/definitions/models.Hours'
+        type: array
+      openHoursIndividual:
+        items:
+          $ref: '#/definitions/models.Hours'
+        type: array
+      radius_distance:
+        type: number
+      rko:
+        type: string
+      salePointFormat:
+        type: string
+      salePointName:
+        type: string
+      status:
+        type: string
+      suoAvailability:
+        type: string
+    type: object
+  utils.HttpError:
+    properties:
+      error:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /atms:
+    get:
+      consumes:
+      - application/json
+      description: Получить банкоматы в радиусе пользователя
+      parameters:
+      - description: User latitude
+        in: query
+        name: userLat
+        required: true
+        type: number
+      - description: User longitude
+        in: query
+        name: userLng
+        required: true
+        type: number
+      - description: Radius in meters
+        in: query
+        name: radius
+        required: true
+        type: number
+      - description: Filter by immobile
+        in: query
+        name: isImmobile
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/support_models.AtmWithRadius'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.HttpError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.HttpError'
+      summary: Получить банкоматы
+      tags:
+      - Банкоматы
+  /offices:
+    get:
+      consumes:
+      - application/json
+      description: Получить отделения банков в радиусе пользователя
+      parameters:
+      - description: User latitude
+        in: query
+        name: userLat
+        required: true
+        type: number
+      - description: User longitude
+        in: query
+        name: userLng
+        required: true
+        type: number
+      - description: Radius in meters
+        in: query
+        name: radius
+        required: true
+        type: number
+      - description: Filter by immobile
+        in: query
+        name: isImmobile
+        type: boolean
+      - description: Filter by legal person
+        in: query
+        name: isLegalPerson
+        type: boolean
+      - description: Filter by individual person
+        in: query
+        name: isIndividualPerson
+        type: boolean
+      - description: Filter by prime
+        in: query
+        name: isPrime
+        type: boolean
+      - description: Filter by open
+        in: query
+        name: isOpen
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/support_models.OfficeWithRadius'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.HttpError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.HttpError'
+      summary: Получить отделения банков
+      tags:
+      - Отделения банков
+  /ping:
+    get:
+      description: Ping API for checking server status
+      operationId: ping
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: pong
+          schema:
+            type: string
+      summary: Ping API
+      tags:
+      - Check
+  /ticket:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: User ID
+        in: query
+        name: userId
+        required: true
+        type: integer
+      - description: Office ID
+        in: query
+        name: officeId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Ticket'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.HttpError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.HttpError'
+      summary: Получить талон для отделения
+      tags:
+      - Талоны
+  /tickets:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: User ID
+        in: query
+        name: userId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Ticket'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.HttpError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.HttpError'
+      summary: Получить талоны пользователя
+      tags:
+      - Талоны
+swagger: "2.0"

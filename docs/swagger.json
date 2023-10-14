@@ -1,0 +1,449 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/atms": {
+            "get": {
+                "description": "Получить банкоматы в радиусе пользователя",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Банкоматы"
+                ],
+                "summary": "Получить банкоматы",
+                "parameters": [
+                    {
+                        "type": "number",
+                        "description": "User latitude",
+                        "name": "userLat",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "number",
+                        "description": "User longitude",
+                        "name": "userLng",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "number",
+                        "description": "Radius in meters",
+                        "name": "radius",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "Filter by immobile",
+                        "name": "isImmobile",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/support_models.AtmWithRadius"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.HttpError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/utils.HttpError"
+                        }
+                    }
+                }
+            }
+        },
+        "/offices": {
+            "get": {
+                "description": "Получить отделения банков в радиусе пользователя",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Отделения банков"
+                ],
+                "summary": "Получить отделения банков",
+                "parameters": [
+                    {
+                        "type": "number",
+                        "description": "User latitude",
+                        "name": "userLat",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "number",
+                        "description": "User longitude",
+                        "name": "userLng",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "number",
+                        "description": "Radius in meters",
+                        "name": "radius",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "Filter by immobile",
+                        "name": "isImmobile",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "Filter by legal person",
+                        "name": "isLegalPerson",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "Filter by individual person",
+                        "name": "isIndividualPerson",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "Filter by prime",
+                        "name": "isPrime",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "Filter by open",
+                        "name": "isOpen",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/support_models.OfficeWithRadius"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.HttpError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/utils.HttpError"
+                        }
+                    }
+                }
+            }
+        },
+        "/ping": {
+            "get": {
+                "description": "Ping API for checking server status",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Check"
+                ],
+                "summary": "Ping API",
+                "operationId": "ping",
+                "responses": {
+                    "200": {
+                        "description": "pong",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/ticket": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Талоны"
+                ],
+                "summary": "Получить талон для отделения",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "User ID",
+                        "name": "userId",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Office ID",
+                        "name": "officeId",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/models.Ticket"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.HttpError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/utils.HttpError"
+                        }
+                    }
+                }
+            }
+        },
+        "/tickets": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Талоны"
+                ],
+                "summary": "Получить талоны пользователя",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "User ID",
+                        "name": "userId",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Ticket"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.HttpError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/utils.HttpError"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.Hours": {
+            "type": "object",
+            "properties": {
+                "days": {
+                    "type": "string"
+                },
+                "hours": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Service": {
+            "type": "object",
+            "properties": {
+                "serviceActivity": {
+                    "type": "string"
+                },
+                "serviceCapability": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Services": {
+            "type": "object",
+            "properties": {
+                "blind": {
+                    "$ref": "#/definitions/models.Service"
+                },
+                "nfcForBankCards": {
+                    "$ref": "#/definitions/models.Service"
+                },
+                "qrRead": {
+                    "$ref": "#/definitions/models.Service"
+                },
+                "supportsChargeRub": {
+                    "$ref": "#/definitions/models.Service"
+                },
+                "supportsEur": {
+                    "$ref": "#/definitions/models.Service"
+                },
+                "supportsRub": {
+                    "$ref": "#/definitions/models.Service"
+                },
+                "supportsUsd": {
+                    "$ref": "#/definitions/models.Service"
+                },
+                "wheelchair": {
+                    "$ref": "#/definitions/models.Service"
+                }
+            }
+        },
+        "models.Ticket": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "officeId": {
+                    "type": "integer"
+                },
+                "userId": {
+                    "type": "integer"
+                }
+            }
+        },
+        "support_models.AtmWithRadius": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "allDay": {
+                    "type": "boolean"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "latitude": {
+                    "type": "number"
+                },
+                "longitude": {
+                    "type": "number"
+                },
+                "radius_distance": {
+                    "type": "number"
+                },
+                "services": {
+                    "$ref": "#/definitions/models.Services"
+                }
+            }
+        },
+        "support_models.OfficeWithRadius": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "distance": {
+                    "type": "integer"
+                },
+                "hasRamp": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "kep": {
+                    "type": "boolean"
+                },
+                "latitude": {
+                    "type": "number"
+                },
+                "longitude": {
+                    "type": "number"
+                },
+                "metroStation": {
+                    "type": "string"
+                },
+                "myBranch": {
+                    "type": "boolean"
+                },
+                "officeType": {
+                    "type": "string"
+                },
+                "openHours": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Hours"
+                    }
+                },
+                "openHoursIndividual": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Hours"
+                    }
+                },
+                "radius_distance": {
+                    "type": "number"
+                },
+                "rko": {
+                    "type": "string"
+                },
+                "salePointFormat": {
+                    "type": "string"
+                },
+                "salePointName": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "suoAvailability": {
+                    "type": "string"
+                }
+            }
+        },
+        "utils.HttpError": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

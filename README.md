@@ -11,7 +11,11 @@
 5. Ждём пока база и сервер соберутся
 6. http://localhost:3000
 
-### Другие команды
+#### [Документация к API](http://localhost:3000/swagger/index.html)
+
+#### Другие команды
 
 - ``./commune_backend.sh stop`` - остановить контейнеры
 - ``./commune_backend.sh rmi`` - удалить контейнеры/images
+- ``./commune_backend.sh start_db`` - собрать только базу
+- ``./commune_backend.sh swagger`` - обновить документацию в Swagger

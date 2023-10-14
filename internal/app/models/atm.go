@@ -6,7 +6,7 @@ import (
 )
 
 type Atm struct {
-	ID        uint     `gorm:"primarykey"`
+	ID        uint     `gorm:"primarykey" json:"id"`
 	Address   string   `json:"address"`
 	Latitude  float64  `json:"latitude" gorm:"index"`
 	Longitude float64  `json:"longitude" gorm:"index"`
