@@ -9,6 +9,8 @@ case $1 in
     docker-compose -p commune_backend down ;;
   rmi)
     docker-compose -p commune_backend down --rmi all ;;
+  swagger)
+    swag init --parseInternal -g cmd/app/main.go ;;
   *)
-    echo "Using: ./commune_backend.sh [start, start_db, stop, rmi]" ;;
+    echo "Using: ./commune_backend.sh [start, start_db, stop, rmi, swagger]" ;;
 esac;

@@ -9,6 +9,7 @@ ADD go.sum /build
 
 COPY cmd /build/cmd
 COPY internal /build/internal
+COPY docs /build/docs
 
 RUN go build -o app ./cmd/app
 

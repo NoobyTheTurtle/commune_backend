@@ -6,7 +6,7 @@ import (
 )
 
 type Office struct {
-	ID                  uint      `gorm:"primarykey"`
+	ID                  uint      `gorm:"primarykey" json:"id"`
 	SalePointName       string    `json:"salePointName"`
 	Address             string    `json:"address"`
 	Status              string    `json:"status"`

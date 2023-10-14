@@ -2,6 +2,8 @@ package handlers
 
 import (
 	"github.com/gin-gonic/gin"
+	swaggerfiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 	"gorm.io/gorm"
 )
 
@@ -18,4 +20,6 @@ func RegisterRoutes(routes *gin.Engine, db *gorm.DB) {
 	routes.GET("/atms", h.GetAtmsWithinRadius)
 	routes.POST("/ticket", h.PickTicket)
 	routes.GET("/tickets", h.GetTickets)
+
+	routes.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 }

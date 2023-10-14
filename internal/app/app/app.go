@@ -1,6 +1,7 @@
 package app
 
 import (
+	_ "commune_backend/docs"
 	"commune_backend/internal/app/config"
 	"commune_backend/internal/app/db"
 	"commune_backend/internal/app/handlers"
