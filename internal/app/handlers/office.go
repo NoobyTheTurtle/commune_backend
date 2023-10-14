@@ -30,11 +30,11 @@ func (h handler) GetOffice(c *gin.Context) {
 		return
 	}
 
-	if err := office.Get(h.DB, id); err != nil {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
+	if result := h.DB.First(&office, id); result.Error != nil {
+		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
 			c.JSON(http.StatusNotFound, utils.NewHttpError(errors.New("office not found")))
 		} else {
-			c.JSON(http.StatusInternalServerError, utils.NewHttpError(err))
+			c.JSON(http.StatusInternalServerError, utils.NewHttpError(result.Error))
 		}
 		return
 	}
