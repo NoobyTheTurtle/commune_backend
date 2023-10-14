@@ -12,7 +12,6 @@ type Atm struct {
 	Longitude float64  `json:"longitude" gorm:"index"`
 	AllDay    bool     `json:"allDay"`
 	Services  Services `gorm:"embedded;embeddedPrefix:services_" json:"services"`
-	//LimitedMobility bool     `json:"limitedMobility"`
 }
 
 type Services struct {
