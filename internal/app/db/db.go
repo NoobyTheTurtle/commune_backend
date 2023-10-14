@@ -7,8 +7,8 @@ import (
 	"gorm.io/gorm/logger"
 )
 
-func Init(url string) (*gorm.DB, error) {
-	db, err := gorm.Open(postgres.Open(url), &gorm.Config{Logger: logger.Default.LogMode(logger.Info)})
+func Init(url string, logger logger.Interface) (*gorm.DB, error) {
+	db, err := gorm.Open(postgres.Open(url), &gorm.Config{Logger: logger})
 
 	if err != nil {
 		return nil, err

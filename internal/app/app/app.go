@@ -7,13 +7,15 @@ import (
 	"commune_backend/internal/app/handlers"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm/logger"
 )
 
 func Start(c *config.Config) error {
 	gin.SetMode(c.GinMode)
 	r := gin.Default()
 	dbUrl := fmt.Sprintf("postgres://postgres:%s@postgres:%s/%s?sslmode=disable", c.DBPassword, c.DBPort, c.DBName)
-	database, err := db.Init(dbUrl)
+	lDb := logger.Default.LogMode(c.DBLogLevel)
+	database, err := db.Init(dbUrl, lDb)
 	if err != nil {
 		return err
 	}

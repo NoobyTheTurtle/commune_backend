@@ -2,14 +2,16 @@ package config
 
 import (
 	"github.com/spf13/viper"
+	"gorm.io/gorm/logger"
 )
 
 type Config struct {
-	ServerPort string `mapstructure:"SERVER_PORT"`
-	DBPort     string `mapstructure:"DB_PORT"`
-	DBName     string `mapstructure:"DB_NAME"`
-	DBPassword string `mapstructure:"POSTGRES_PASSWORD"`
-	GinMode    string `mapstructure:"GIN_MODE"`
+	ServerPort string          `mapstructure:"SERVER_PORT"`
+	DBPort     string          `mapstructure:"DB_PORT"`
+	DBName     string          `mapstructure:"DB_NAME"`
+	DBPassword string          `mapstructure:"POSTGRES_PASSWORD"`
+	GinMode    string          `mapstructure:"GIN_MODE"`
+	DBLogLevel logger.LogLevel `mapstructure:"DB_LOG_LEVEL"`
 }
 
 func Load() (*Config, error) {
