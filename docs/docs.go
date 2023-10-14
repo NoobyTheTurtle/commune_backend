@@ -358,6 +358,23 @@ const docTemplate = `{
                         "name": "officeId",
                         "in": "query",
                         "required": true
+                    },
+                    {
+                        "enum": [
+                            "кредит",
+                            "карта",
+                            "ипотека",
+                            "автокредит",
+                            "вклад и счет",
+                            "платежи и переводы",
+                            "страхование",
+                            "другие услуги"
+                        ],
+                        "type": "string",
+                        "description": "Filter by services",
+                        "name": "service",
+                        "in": "query",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -593,8 +610,14 @@ const docTemplate = `{
                 "id": {
                     "type": "integer"
                 },
-                "office": {
-                    "$ref": "#/definitions/models.Office"
+                "number": {
+                    "type": "string"
+                },
+                "officeId": {
+                    "type": "integer"
+                },
+                "service": {
+                    "type": "string"
                 },
                 "userId": {
                     "type": "integer"

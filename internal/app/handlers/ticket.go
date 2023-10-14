@@ -27,7 +27,12 @@ func (h handler) GetTickets(c *gin.Context) {
 		return
 	}
 
-	err = h.DB.Where("user_id = ?", userId).Preload("Office").Find(&tickets).Error
+	err = h.DB.Where("user_id = ?", userId).
+		Order("created_at desc").
+		Limit(20).
+		Find(&tickets).
+		Error
+
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, utils.NewHttpError(err))
 		return
@@ -42,12 +47,16 @@ func (h handler) GetTickets(c *gin.Context) {
 // @Produce	json
 // @Param userId query uint true "User ID"
 // @Param officeId query uint true "Office ID"
+// @Param service query string true "Filter by services" Enums(кредит, карта, ипотека, автокредит, вклад и счет, платежи и переводы, страхование, другие услуги)
 // @Success 201 {object} models.Ticket
 // @Failure	400	{object} utils.HttpError
 // @Failure	500	{object} utils.HttpError
 // @Router /ticket [post]
 func (h handler) PickTicket(c *gin.Context) {
-	var officeId, userId int64
+	var (
+		officeId, userId int64
+		service          string
+	)
 	userId, err := queries.ParseQueryUserId(c)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, utils.NewHttpError(err))
@@ -59,7 +68,13 @@ func (h handler) PickTicket(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, utils.NewHttpError(err))
 		return
 	}
-	ticket := models.Ticket{OfficeId: officeId, UserId: userId}
+
+	service, err = queries.ParseQueryService(c)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, utils.NewHttpError(err))
+		return
+	}
+	ticket := models.NewTicket(officeId, userId, service)
 
 	err = h.DB.Create(&ticket).Error
 
