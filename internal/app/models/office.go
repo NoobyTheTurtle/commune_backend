@@ -3,6 +3,7 @@ package models
 import (
 	"database/sql/driver"
 	"encoding/json"
+	"gorm.io/gorm"
 )
 
 type Office struct {
@@ -40,4 +41,11 @@ func (hl *HoursList) Scan(value interface{}) error {
 
 func (hl HoursList) Value() (driver.Value, error) {
 	return json.Marshal(hl)
+}
+
+func (o *Office) Get(db *gorm.DB, id uint) error {
+	if err := db.First(o, id); err != nil {
+		return err.Error
+	}
+	return nil
 }

@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"commune_backend/internal/app/filters"
-	"commune_backend/internal/app/handlers/params"
+	"commune_backend/internal/app/handlers/queries"
 	"commune_backend/internal/app/models/support_models"
 	"commune_backend/internal/app/utils"
 	"github.com/gin-gonic/gin"
@@ -27,9 +27,9 @@ import (
 // @Router /atms [get]
 func (h handler) GetAtmsWithinRadius(c *gin.Context) {
 	var atmsWithDistance support_models.AtmsWithRadius
-	var ga params.GeoArea
+	var ga queries.GeoArea
 
-	err := ga.ParseParamsGeoArea(c)
+	err := ga.ParseQueryGeoArea(c)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, utils.NewHttpError(err))
 		return
