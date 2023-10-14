@@ -6,12 +6,12 @@ import (
 )
 
 func FilterOfficesByLegalPerson(isLegalPersonStr string) Filter {
-	isLegalPerson, err := strconv.ParseBool(isLegalPersonStr)
+	condition, err := strconv.ParseBool(isLegalPersonStr)
 	return func(db *gorm.DB) *gorm.DB {
 		if err != nil {
 			return db
 		}
-		if isLegalPerson {
+		if condition {
 			return db.Where("NOT offices.open_hours @> '[{\"days\": \"Не обслуживает ЮЛ\"}]'")
 		} else {
 			return db.Where("offices.open_hours @> '[{\"days\": \"Не обслуживает ЮЛ\"}]'")
@@ -20,12 +20,12 @@ func FilterOfficesByLegalPerson(isLegalPersonStr string) Filter {
 }
 
 func FilterOfficesByIndividualPerson(isIndividualPersonStr string) Filter {
-	isIndividualPerson, err := strconv.ParseBool(isIndividualPersonStr)
+	condition, err := strconv.ParseBool(isIndividualPersonStr)
 	return func(db *gorm.DB) *gorm.DB {
 		if err != nil {
 			return db
 		}
-		if isIndividualPerson {
+		if condition {
 			return db.Where("NOT offices.open_hours_individual @> '[{\"days\": \"Не обслуживает ФЛ\"}]'")
 		} else {
 			return db.Where("offices.open_hours_individual @> '[{\"days\": \"Не обслуживает ФЛ\"}]'")
@@ -35,12 +35,12 @@ func FilterOfficesByIndividualPerson(isIndividualPersonStr string) Filter {
 }
 
 func FilterOfficesByImmobile(isImmobileStr string) Filter {
-	isImmobile, err := strconv.ParseBool(isImmobileStr)
+	condition, err := strconv.ParseBool(isImmobileStr)
 	return func(db *gorm.DB) *gorm.DB {
 		if err != nil {
 			return db
 		}
-		if isImmobile {
+		if condition {
 			return db.Where("offices.has_ramp = 'Y'")
 		} else {
 			return db.Where("offices.has_ramp = 'N'")
@@ -50,12 +50,12 @@ func FilterOfficesByImmobile(isImmobileStr string) Filter {
 }
 
 func FilterOfficesByPrime(isPrimeStr string) Filter {
-	isPrime, err := strconv.ParseBool(isPrimeStr)
+	condition, err := strconv.ParseBool(isPrimeStr)
 	return func(db *gorm.DB) *gorm.DB {
 		if err != nil {
 			return db
 		}
-		if isPrime {
+		if condition {
 			return db.Where("offices.office_type LIKE '%Привилегия%'")
 		} else {
 			return db.Where("offices.office_type NOT LIKE '%Привилегия%'")
@@ -79,5 +79,33 @@ func FilterOfficesByOpen(isOpenStr, isLegalPersonStr string) Filter {
 			}
 		}
 		return db.Where("offices.status != 'открытая'")
+	}
+}
+
+func FilterOfficesByWithdrawal(isWithdrawalStr string) Filter {
+	condition, err := strconv.ParseBool(isWithdrawalStr)
+	return func(db *gorm.DB) *gorm.DB {
+		if err != nil {
+			return db
+		}
+		if condition {
+			return db.Where("offices.withdrawal IS TRUE")
+		} else {
+			return db.Where("offices.withdrawal IS FALSE")
+		}
+	}
+}
+
+func FilterOfficesByReplenishment(isReplenishmentStr string) Filter {
+	condition, err := strconv.ParseBool(isReplenishmentStr)
+	return func(db *gorm.DB) *gorm.DB {
+		if err != nil {
+			return db
+		}
+		if condition {
+			return db.Where("offices.replenishment IS TRUE")
+		} else {
+			return db.Where("offices.replenishment IS FALSE")
+		}
 	}
 }
