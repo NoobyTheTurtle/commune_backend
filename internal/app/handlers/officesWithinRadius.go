@@ -25,6 +25,7 @@ import (
 // @Param isOpen query bool false "Filter by open"
 // @Param isWithdrawal query bool false "Filter by withdrawal"
 // @Param isReplenishment query bool false "Filter by replenishment"
+// @Param service query string false "Filter by services" Enums(кредит, карта, ипотека, автокредит, вклад и счет, платежи и переводы, страхование, другие услуги)
 // @Success 200 {object} support_models.OfficesWithRadius
 // @Failure	400	{object} utils.HttpError
 // @Failure	500	{object} utils.HttpError
@@ -47,6 +48,7 @@ func (h handler) GetOfficesWithinRadius(c *gin.Context) {
 		filters.FilterOfficesByOpen(c.Query("isOpen"), c.Query("isLegalPerson")),
 		filters.FilterOfficesByWithdrawal(c.Query("isWithdrawal")),
 		filters.FilterOfficesByReplenishment(c.Query("isReplenishment")),
+		filters.FilterOfficesByService(c.Query("service")),
 	}
 
 	if err := officesWithDistance.GetWithinRadius(h.DB, &ga, &f); err != nil {

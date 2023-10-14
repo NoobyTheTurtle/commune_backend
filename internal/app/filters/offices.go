@@ -1,6 +1,9 @@
 package filters
 
 import (
+	"commune_backend/internal/app/models"
+	"commune_backend/internal/app/utils"
+	"fmt"
 	"gorm.io/gorm"
 	"strconv"
 )
@@ -106,6 +109,17 @@ func FilterOfficesByReplenishment(isReplenishmentStr string) Filter {
 			return db.Where("offices.replenishment IS TRUE")
 		} else {
 			return db.Where("offices.replenishment IS FALSE")
+		}
+	}
+}
+
+func FilterOfficesByService(service string) Filter {
+	condition := utils.Contains(models.ServicesList, service)
+	return func(db *gorm.DB) *gorm.DB {
+		if condition {
+			return db.Where("offices.services @> ?", fmt.Sprintf("\"%s\"", service))
+		} else {
+			return db
 		}
 	}
 }
