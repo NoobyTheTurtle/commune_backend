@@ -1,4 +1,4 @@
-package api_server
+package app
 
 import (
 	"commune_backend/internal/app/config"
@@ -17,7 +17,7 @@ func Start(c *config.Config) error {
 		return err
 	}
 
-	handlers.RegisterRoutes(r, database, c)
+	handlers.RegisterRoutes(r, database)
 
 	if err := r.Run(fmt.Sprintf(":%s", c.ServerPort)); err != nil {
 		return err

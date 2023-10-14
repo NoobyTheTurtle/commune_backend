@@ -10,7 +10,7 @@ ADD go.sum /build
 COPY cmd /build/cmd
 COPY internal /build/internal
 
-RUN go build -o api_server ./cmd/api_server
+RUN go build -o app ./cmd/app
 
 FROM alpine
 
@@ -20,6 +20,6 @@ ADD .env /build
 
 COPY seeds /build/seeds
 
-COPY --from=builder /build/api_server /build/api_server
+COPY --from=builder /build/app /build/app
 
-CMD ["./api_server"]
+CMD ["./app"]

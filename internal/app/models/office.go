@@ -23,9 +23,6 @@ type Office struct {
 	Distance            int       `json:"distance"`
 	Kep                 bool      `json:"kep"`
 	MyBranch            bool      `json:"myBranch"`
-	//LimitedMobility     bool      `json:"limitedMobility"`
-	//PremiumService      bool      `json:"premiumService"`
-	//TypeClients         string    `json:"typeClients"`
 }
 
 type HoursList []Hours

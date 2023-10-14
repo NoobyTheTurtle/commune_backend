@@ -1,20 +1,17 @@
 package handlers
 
 import (
-	"commune_backend/internal/app/config"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
 
 type handler struct {
-	DB     *gorm.DB
-	Config *config.Config
+	DB *gorm.DB
 }
 
-func RegisterRoutes(routes *gin.Engine, db *gorm.DB, c *config.Config) {
+func RegisterRoutes(routes *gin.Engine, db *gorm.DB) {
 	h := &handler{
-		DB:     db,
-		Config: c,
+		DB: db,
 	}
 	routes.GET("/ping", h.Ping)
 	routes.GET("/offices", h.GetOfficesWithinRadius)
