@@ -17,7 +17,9 @@ func RegisterRoutes(routes *gin.Engine, db *gorm.DB) {
 	}
 	routes.GET("/ping", h.Ping)
 	routes.GET("/offices", h.GetOfficesWithinRadius)
+	routes.GET("/offices/:id", h.GetOffice)
 	routes.GET("/atms", h.GetAtmsWithinRadius)
+	routes.GET("/atms/:id", h.GetAtm)
 	routes.POST("/ticket", h.PickTicket)
 	routes.GET("/tickets", h.GetTickets)
 

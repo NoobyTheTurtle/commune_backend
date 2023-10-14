@@ -3,6 +3,7 @@ package models
 import (
 	"database/sql/driver"
 	"encoding/json"
+	"gorm.io/gorm"
 )
 
 type Atm struct {
@@ -38,4 +39,11 @@ func (p *Service) Scan(value interface{}) error {
 
 func (c Service) Value() (driver.Value, error) {
 	return json.Marshal(c)
+}
+
+func (o *Atm) Get(db *gorm.DB, id uint) error {
+	if err := db.First(o, id); err != nil {
+		return err.Error
+	}
+	return nil
 }

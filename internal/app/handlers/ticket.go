@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"commune_backend/internal/app/handlers/params"
+	"commune_backend/internal/app/handlers/queries"
 	"commune_backend/internal/app/models"
 	"commune_backend/internal/app/utils"
 	"github.com/gin-gonic/gin"
@@ -21,7 +21,7 @@ import (
 func (h handler) GetTickets(c *gin.Context) {
 	var tickets []models.Ticket
 
-	userId, err := params.ParseParamsUserId(c)
+	userId, err := queries.ParseQueryUserId(c)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, utils.NewHttpError(err))
 		return
@@ -48,13 +48,13 @@ func (h handler) GetTickets(c *gin.Context) {
 // @Router /ticket [post]
 func (h handler) PickTicket(c *gin.Context) {
 	var officeId, userId int64
-	userId, err := params.ParseParamsUserId(c)
+	userId, err := queries.ParseQueryUserId(c)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, utils.NewHttpError(err))
 		return
 	}
 
-	officeId, err = params.ParseParamsOfficeId(c)
+	officeId, err = queries.ParseQueryOfficeId(c)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, utils.NewHttpError(err))
 		return

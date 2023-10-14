@@ -1,4 +1,4 @@
-package params
+package queries
 
 import (
 	"github.com/gin-gonic/gin"
@@ -11,7 +11,7 @@ type GeoArea struct {
 	Radius  float64
 }
 
-func (ga *GeoArea) ParseParamsGeoArea(c *gin.Context) (err error) {
+func (ga *GeoArea) ParseQueryGeoArea(c *gin.Context) (err error) {
 	ga.UserLat, err = strconv.ParseFloat(c.Query("userLat"), 64)
 	if err != nil {
 		return

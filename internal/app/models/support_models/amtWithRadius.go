@@ -2,7 +2,7 @@ package support_models
 
 import (
 	"commune_backend/internal/app/filters"
-	"commune_backend/internal/app/handlers/params"
+	"commune_backend/internal/app/handlers/queries"
 	"commune_backend/internal/app/models"
 	"gorm.io/gorm"
 )
@@ -16,7 +16,7 @@ type AtmsWithRadius []AtmWithRadius
 
 func (o *AtmsWithRadius) GetWithinRadius(
 	db *gorm.DB,
-	ga *params.GeoArea,
+	ga *queries.GeoArea,
 	f *filters.Filters,
 ) error {
 	sqlSubQuery := db.Select(`		

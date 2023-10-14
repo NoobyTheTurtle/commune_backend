@@ -1,4 +1,23 @@
 definitions:
+  models.Atm:
+    properties:
+      address:
+        type: string
+      allDay:
+        type: boolean
+      id:
+        type: integer
+      latitude:
+        type: number
+      longitude:
+        type: number
+      replenishment:
+        type: boolean
+      services:
+        $ref: '#/definitions/models.Services'
+      withdrawal:
+        type: boolean
+    type: object
   models.Hours:
     properties:
       days:
@@ -217,6 +236,38 @@ paths:
       summary: Получить банкоматы
       tags:
       - Банкоматы
+  /atms/{id}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Atm ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Atm'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.HttpError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.HttpError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.HttpError'
+      summary: Получить банкомат по ID
+      tags:
+      - Банкоматы
   /offices:
     get:
       consumes:
@@ -284,6 +335,38 @@ paths:
           schema:
             $ref: '#/definitions/utils.HttpError'
       summary: Получить отделения банков
+      tags:
+      - Отделения банков
+  /offices/{id}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Office ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Office'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.HttpError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.HttpError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.HttpError'
+      summary: Получить отделение банка по ID
       tags:
       - Отделения банков
   /ping:
