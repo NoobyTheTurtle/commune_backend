@@ -19,6 +19,8 @@ import (
 // @Param userLng query float64 true "User longitude"
 // @Param radius query float64 true "Radius in meters"
 // @Param isImmobile query bool false "Filter by immobile"
+// @Param isWithdrawal query bool false "Filter by withdrawal"
+// @Param isReplenishment query bool false "Filter by replenishment"
 // @Success 200 {object} support_models.AtmsWithRadius
 // @Failure	400	{object} utils.HttpError
 // @Failure	500	{object} utils.HttpError
@@ -35,6 +37,8 @@ func (h handler) GetAtmsWithinRadius(c *gin.Context) {
 
 	f := filters.Filters{
 		filters.FilterAtmsByImmobile(c.Query("isImmobile")),
+		filters.FilterAtmsByWithdrawal(c.Query("isWithdrawal")),
+		filters.FilterAtmsByReplenishment(c.Query("isReplenishment")),
 	}
 
 	if err := atmsWithDistance.GetWithinRadius(h.DB, &ga, &f); err != nil {

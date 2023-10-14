@@ -6,6 +6,51 @@ definitions:
       hours:
         type: string
     type: object
+  models.Office:
+    properties:
+      address:
+        type: string
+      distance:
+        type: integer
+      hasRamp:
+        type: string
+      id:
+        type: integer
+      kep:
+        type: boolean
+      latitude:
+        type: number
+      longitude:
+        type: number
+      metroStation:
+        type: string
+      myBranch:
+        type: boolean
+      officeType:
+        type: string
+      openHours:
+        items:
+          $ref: '#/definitions/models.Hours'
+        type: array
+      openHoursIndividual:
+        items:
+          $ref: '#/definitions/models.Hours'
+        type: array
+      replenishment:
+        type: boolean
+      rko:
+        type: string
+      salePointFormat:
+        type: string
+      salePointName:
+        type: string
+      status:
+        type: string
+      suoAvailability:
+        type: string
+      withdrawal:
+        type: boolean
+    type: object
   models.Service:
     properties:
       serviceActivity:
@@ -34,10 +79,12 @@ definitions:
     type: object
   models.Ticket:
     properties:
+      createdAt:
+        type: string
       id:
         type: integer
-      officeId:
-        type: integer
+      office:
+        $ref: '#/definitions/models.Office'
       userId:
         type: integer
     type: object
@@ -55,8 +102,12 @@ definitions:
         type: number
       radius_distance:
         type: number
+      replenishment:
+        type: boolean
       services:
         $ref: '#/definitions/models.Services'
+      withdrawal:
+        type: boolean
     type: object
   support_models.OfficeWithRadius:
     properties:
@@ -90,6 +141,8 @@ definitions:
         type: array
       radius_distance:
         type: number
+      replenishment:
+        type: boolean
       rko:
         type: string
       salePointFormat:
@@ -100,6 +153,8 @@ definitions:
         type: string
       suoAvailability:
         type: string
+      withdrawal:
+        type: boolean
     type: object
   utils.HttpError:
     properties:
@@ -133,6 +188,14 @@ paths:
       - description: Filter by immobile
         in: query
         name: isImmobile
+        type: boolean
+      - description: Filter by withdrawal
+        in: query
+        name: isWithdrawal
+        type: boolean
+      - description: Filter by replenishment
+        in: query
+        name: isReplenishment
         type: boolean
       produces:
       - application/json
@@ -194,6 +257,14 @@ paths:
       - description: Filter by open
         in: query
         name: isOpen
+        type: boolean
+      - description: Filter by withdrawal
+        in: query
+        name: isWithdrawal
+        type: boolean
+      - description: Filter by replenishment
+        in: query
+        name: isReplenishment
         type: boolean
       produces:
       - application/json

@@ -55,6 +55,18 @@ const docTemplate = `{
                         "description": "Filter by immobile",
                         "name": "isImmobile",
                         "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "Filter by withdrawal",
+                        "name": "isWithdrawal",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "Filter by replenishment",
+                        "name": "isReplenishment",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -145,6 +157,18 @@ const docTemplate = `{
                         "type": "boolean",
                         "description": "Filter by open",
                         "name": "isOpen",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "Filter by withdrawal",
+                        "name": "isWithdrawal",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "Filter by replenishment",
+                        "name": "isReplenishment",
                         "in": "query"
                     }
                 ],
@@ -303,6 +327,74 @@ const docTemplate = `{
                 }
             }
         },
+        "models.Office": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "distance": {
+                    "type": "integer"
+                },
+                "hasRamp": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "kep": {
+                    "type": "boolean"
+                },
+                "latitude": {
+                    "type": "number"
+                },
+                "longitude": {
+                    "type": "number"
+                },
+                "metroStation": {
+                    "type": "string"
+                },
+                "myBranch": {
+                    "type": "boolean"
+                },
+                "officeType": {
+                    "type": "string"
+                },
+                "openHours": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Hours"
+                    }
+                },
+                "openHoursIndividual": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Hours"
+                    }
+                },
+                "replenishment": {
+                    "type": "boolean"
+                },
+                "rko": {
+                    "type": "string"
+                },
+                "salePointFormat": {
+                    "type": "string"
+                },
+                "salePointName": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "suoAvailability": {
+                    "type": "string"
+                },
+                "withdrawal": {
+                    "type": "boolean"
+                }
+            }
+        },
         "models.Service": {
             "type": "object",
             "properties": {
@@ -346,11 +438,14 @@ const docTemplate = `{
         "models.Ticket": {
             "type": "object",
             "properties": {
+                "createdAt": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "integer"
                 },
-                "officeId": {
-                    "type": "integer"
+                "office": {
+                    "$ref": "#/definitions/models.Office"
                 },
                 "userId": {
                     "type": "integer"
@@ -378,8 +473,14 @@ const docTemplate = `{
                 "radius_distance": {
                     "type": "number"
                 },
+                "replenishment": {
+                    "type": "boolean"
+                },
                 "services": {
                     "$ref": "#/definitions/models.Services"
+                },
+                "withdrawal": {
+                    "type": "boolean"
                 }
             }
         },
@@ -431,6 +532,9 @@ const docTemplate = `{
                 "radius_distance": {
                     "type": "number"
                 },
+                "replenishment": {
+                    "type": "boolean"
+                },
                 "rko": {
                     "type": "string"
                 },
@@ -445,6 +549,9 @@ const docTemplate = `{
                 },
                 "suoAvailability": {
                     "type": "string"
+                },
+                "withdrawal": {
+                    "type": "boolean"
                 }
             }
         },

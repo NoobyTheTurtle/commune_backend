@@ -27,7 +27,7 @@ func (h handler) GetTickets(c *gin.Context) {
 		return
 	}
 
-	err = h.DB.Where("user_id = ?", userId).Find(&tickets).Error
+	err = h.DB.Where("user_id = ?", userId).Preload("Office").Find(&tickets).Error
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, utils.NewHttpError(err))
 		return
