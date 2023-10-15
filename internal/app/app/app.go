@@ -20,7 +20,7 @@ func Start(c *config.Config) error {
 		return err
 	}
 
-	handlers.RegisterRoutes(r, database)
+	handlers.InitRoutes(r, database)
 
 	if err := r.Run(fmt.Sprintf(":%s", c.ServerPort)); err != nil {
 		return err

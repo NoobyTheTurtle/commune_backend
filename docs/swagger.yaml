@@ -115,6 +115,23 @@ definitions:
       userId:
         type: integer
     type: object
+  models.Workload:
+    properties:
+      clients:
+        type: integer
+      dateTime:
+        type: string
+      employers:
+        type: integer
+      maxClients:
+        type: integer
+      officeId:
+        type: integer
+      percent:
+        type: number
+      status:
+        type: boolean
+    type: object
   support_models.AtmWithRadius:
     properties:
       address:
@@ -485,4 +502,34 @@ paths:
       summary: Получить талоны пользователя
       tags:
       - Талоны
+  /workloads/{officeId}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Office ID
+        in: path
+        name: officeId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Workload'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.HttpError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.HttpError'
+      summary: Получить загруженность отделения банка по ID
+      tags:
+      - Загруженность
 swagger: "2.0"

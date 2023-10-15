@@ -444,6 +444,52 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/workloads/{officeId}": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Загруженность"
+                ],
+                "summary": "Получить загруженность отделения банка по ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Office ID",
+                        "name": "officeId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Workload"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.HttpError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/utils.HttpError"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -621,6 +667,32 @@ const docTemplate = `{
                 },
                 "userId": {
                     "type": "integer"
+                }
+            }
+        },
+        "models.Workload": {
+            "type": "object",
+            "properties": {
+                "clients": {
+                    "type": "integer"
+                },
+                "dateTime": {
+                    "type": "string"
+                },
+                "employers": {
+                    "type": "integer"
+                },
+                "maxClients": {
+                    "type": "integer"
+                },
+                "officeId": {
+                    "type": "integer"
+                },
+                "percent": {
+                    "type": "number"
+                },
+                "status": {
+                    "type": "boolean"
                 }
             }
         },

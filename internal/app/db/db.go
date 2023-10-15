@@ -14,7 +14,12 @@ func Init(url string, logger logger.Interface) (*gorm.DB, error) {
 		return nil, err
 	}
 
-	if err = db.AutoMigrate(models.Office{}, models.Atm{}, models.Ticket{}); err != nil {
+	if err = db.AutoMigrate(
+		models.Office{},
+		models.Atm{},
+		models.Ticket{},
+		models.Workload{},
+	); err != nil {
 		return nil, err
 	}
 
