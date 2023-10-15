@@ -27,7 +27,7 @@ func (h handler) GetWorkloadByOffice(c *gin.Context) {
 		return
 	}
 
-	if result := h.DB.Find(&workloads, "office_id = ?", officeId); result.Error != nil {
+	if result := h.DB.Order("date_time asc").Find(&workloads, "office_id = ?", officeId); result.Error != nil {
 		c.JSON(http.StatusInternalServerError, utils.NewHttpError(result.Error))
 	}
 
